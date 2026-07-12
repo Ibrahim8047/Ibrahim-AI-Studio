@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Mohd Ibrahim Uddin — AI & ML Engineer. AI NexQuery, Hybrid AI Query System, AEO Diagnostic, RAG, Text-to-SQL.">
+<meta name="author" content="Mohd Ibrahim Uddin">
+<title>Mohd Ibrahim Uddin — AI & ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #ffffff;
+  --bg2:      #f7f7f7;
+  --bg3:      #f0f0f0;
+  --bgCard:   #ffffff;
+  --border:   #e5e5e5;
+  --border2:  #d0d0d0;
+  --text:     #111111;
+  --text2:    #555555;
+  --text3:    #888888;
+  --text4:    #bbbbbb;
+  --navBg:    rgba(255,255,255,0.93);
+  --inputBg:  #f7f7f7;
+  --shadow:   0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  --shadowHov:0 4px 12px rgba(0,0,0,0.12), 0 16px 40px rgba(0,0,0,0.08);
+  --accent:   #111111;
+  --green:    #166534;
+  --greenBg:  #f0fdf4;
+  --greenBd:  #bbf7d0;
+  --mockBar:  #f0f0f0;
+  --mockBarBd:#e5e5e5;
+  --mockBbl:  #ffffff;
+  --mockBblBd:#e5e5e5;
+  --mockIn:   #f7f7f7;
+}
+[data-theme="dark"] {
+  --bg:       #0a0a0a;
+  --bg2:      #111111;
+  --bg3:      #1a1a1a;
+  --bgCard:   #111111;
+  --border:   #2a2a2a;
+  --border2:  #3a3a3a;
+  --text:     #f0f0f0;
+  --text2:    #a0a0a0;
+  --text3:    #666666;
+  --text4:    #444444;
+  --navBg:    rgba(10,10,10,0.93);
+  --inputBg:  #1a1a1a;
+  --shadow:   0 1px 3px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
+  --shadowHov:0 4px 12px rgba(0,0,0,0.5), 0 16px 40px rgba(0,0,0,0.4);
+  --accent:   #f0f0f0;
+  --green:    #4ade80;
+  --greenBg:  #052e16;
+  --greenBd:  #14532d;
+  --mockBar:  #1a1a1a;
+  --mockBarBd:#2a2a2a;
+  --mockBbl:  #1a1a1a;
+  --mockBblBd:#2a2a2a;
+  --mockIn:   #1a1a1a;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; transition: background .2s ease, color .2s ease; }
+h1,h2,h3,h4,h5 { font-family: 'Sora', sans-serif; color: var(--text); line-height: 1.1; letter-spacing: -0.03em; }
+a { text-decoration: none; color: inherit; }
+button { font-family: 'Inter', sans-serif; cursor: pointer; }
+
+.nav { position: fixed; top:0; left:0; right:0; z-index:999; height:58px; display:flex; align-items:center; background: var(--navBg); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all .2s; }
+.nav-inner { max-width:1180px; width:100%; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; font-family:'Sora',sans-serif; font-weight:700; font-size:1rem; color:var(--text); }
+.nav-logo-k { width:30px; height:30px; border-radius:7px; background:var(--text); color:var(--bg); display:flex; align-items:center; justify-content:center; font-size:.8rem; font-weight:800; flex-shrink:0; }
+.nav-links { display:flex; align-items:center; gap:1.75rem; list-style:none; }
+.nav-links a, .nav-links span { font-size:.84rem; font-weight:500; color:var(--text2); cursor:pointer; transition: color .15s; }
+.nav-links a:hover, .nav-links span:hover { color:var(--text); }
+.nav-drop { position:relative; }
+.nav-drop-panel { display:none; position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%); min-width:190px; background:var(--bgCard); border:1px solid var(--border); border-radius:10px; padding:.35rem; z-index:9999; box-shadow:var(--shadow); }
+.nav-drop:hover .nav-drop-panel { display:block; }
+.nav-drop-panel a, .nav-drop-panel span { display:block; padding:.5rem .85rem; border-radius:7px; font-size:.82rem; color:var(--text2); cursor:pointer; transition:all .15s; }
+.nav-drop-panel a:hover, .nav-drop-panel span:hover { background:var(--bg2); color:var(--text); }
+.nav-right { display:flex; align-items:center; gap:.65rem; }
+.btn-theme { width:34px; height:34px; border-radius:50%; background:none; border:1px solid var(--border); color:var(--text2); display:flex; align-items:center; justify-content:center; font-size:.85rem; transition:all .2s; }
+.btn-theme:hover { border-color:var(--border2); color:var(--text); }
+.btn-nav-cta { padding:.45rem 1.1rem; border-radius:7px; background:var(--text); color:var(--bg); font-size:.82rem; font-weight:600; border:none; transition:opacity .2s; }
+.btn-nav-cta:hover { opacity:.85; }
+.btn-mob { display:none; background:none; border:none; color:var(--text); font-size:1.3rem; }
+
+.mob-nav { display:none; position:fixed; top:58px; left:0; right:0; background:var(--bg); border-bottom:1px solid var(--border); padding:1.25rem 1.5rem; z-index:998; }
+.mob-nav.open { display:block; }
+.mob-nav ul { list-style:none; display:flex; flex-direction:column; gap:.9rem; }
+.mob-nav li a, .mob-nav li span { font-size:.95rem; font-weight:500; color:var(--text2); cursor:pointer; display:block; padding:.3rem 0; }
+.mob-nav li a:hover, .mob-nav li span:hover { color:var(--text); }
+
+.btn { display:inline-flex; align-items:center; gap:.45rem; padding:.78rem 1.65rem; border-radius:8px; font-size:.875rem; font-weight:600; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:all .18s; letter-spacing:.005em; }
+.btn-solid { background:var(--text); color:var(--bg); }
+.btn-solid:hover { opacity:.85; transform:translateY(-1px); }
+.btn-ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+.btn-ghost:hover { border-color:var(--border2); background:var(--bg2); }
+.btn-back { display:inline-flex; align-items:center; gap:.4rem; padding:.48rem .95rem; border-radius:7px; background:none; border:1px solid var(--border); color:var(--text2); font-size:.82rem; font-weight:500; cursor:pointer; transition:all .18s; margin-bottom:2.5rem; font-family:'Inter',sans-serif; }
+.btn-back:hover { border-color:var(--border2); color:var(--text); }
+
+.page { display:none; }
+.inner { display:none; min-height:100vh; padding:6.5rem 1.5rem 5rem; background:var(--bg); }
+.inner.active { display:block; }
+.wrap { max-width:1180px; margin:0 auto; }
+section { padding:6rem 1.5rem; }
+.divider { height:1px; background:var(--border); max-width:1180px; margin:0 auto; }
+
+.lbl { font-size:.7rem; font-weight:700; color:var(--text3); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.75rem; display:block; }
+.sec-h2 { font-size:clamp(1.9rem,4vw,3rem); font-weight:800; color:var(--text); margin-bottom:.85rem; }
+.sec-p { font-size:1rem; color:var(--text2); max-width:520px; line-height:1.75; }
+
+.hero { min-height:100vh; display:flex; align-items:center; padding:8rem 1.5rem 5rem; background:var(--bg); }
+.hero-in { max-width:1180px; margin:0 auto; width:100%; text-align:center; }
+.hero-tag { display:inline-flex; align-items:center; gap:.45rem; font-size:.72rem; font-weight:600; color:var(--text3); letter-spacing:.08em; text-transform:uppercase; margin-bottom:1.75rem; animation:rise .55s ease both; }
+.hero-tag-dot { width:6px; height:6px; border-radius:50%; background:var(--text); flex-shrink:0; }
+.hero h1 { font-size:clamp(2.6rem,7vw,5.6rem); font-weight:900; letter-spacing:-0.05em; line-height:1.0; margin-bottom:1.5rem; animation:rise .58s .06s ease both; }
+.hero-sub { font-size:clamp(.97rem,2vw,1.18rem); color:var(--text2); max-width:560px; margin:0 auto 2.5rem; line-height:1.75; animation:rise .58s .12s ease both; }
+.hero-btns { display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; animation:rise .58s .18s ease both; margin-bottom:2.5rem; }
+.hero-pills { display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; animation:rise .58s .24s ease both; }
+.h-pill { padding:.35rem .9rem; border:1px solid var(--border); border-radius:50px; font-size:.78rem; font-weight:500; color:var(--text2); cursor:pointer; transition:all .18s; background:none; }
+.h-pill:hover { border-color:var(--border2); color:var(--text); background:var(--bg2); }
+.hero-nums { display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; margin-top:3rem; padding-top:2.5rem; border-top:1px solid var(--border); animation:rise .58s .3s ease both; }
+.hn-v { font-family:'Sora',sans-serif; font-size:2.1rem; font-weight:900; color:var(--text); letter-spacing:-0.04em; }
+.hn-l { font-size:.73rem; color:var(--text3); margin-top:.2rem; font-weight:500; }
+@keyframes rise { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
+
+.about-sec { background:var(--bg2); }
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+.about-text h2 { font-size:clamp(1.8rem,3.5vw,2.8rem); margin-bottom:1.1rem; }
+.about-text p { color:var(--text2); line-height:1.8; margin-bottom:.85rem; font-size:.96rem; }
+.about-stats { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; margin-top:2rem; }
+.stat-box { padding:1.25rem; border:1px solid var(--border); border-radius:10px; background:var(--bgCard); transition:border-color .18s; }
+.stat-box:hover { border-color:var(--border2); }
+.stat-n { font-family:'Sora',sans-serif; font-size:2rem; font-weight:900; color:var(--text); letter-spacing:-0.04em; }
+.stat-l { font-size:.73rem; color:var(--text3); margin-top:.2rem; font-weight:500; }
+.about-visual { aspect-ratio:1; border:1px solid var(--border); border-radius:14px; background:var(--bgCard); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.vis-dots { position:absolute; inset:0; background-image:radial-gradient(circle, var(--border) 1px, transparent 1px); background-size:28px 28px; }
+.vis-ctr { position:relative; z-index:1; text-align:center; padding:2rem; }
+.vis-box { width:64px; height:64px; border-radius:14px; background:var(--text); display:flex; align-items:center; justify-content:center; color:var(--bg); font-family:'Sora',sans-serif; font-weight:900; font-size:1.6rem; margin:0 auto 1rem; }
+.vis-ctr h3 { font-size:1.2rem; color:var(--text); margin-bottom:.3rem; }
+.vis-ctr p { font-size:.78rem; color:var(--text3); }
+
+.products-sec { background:var(--bg); }
+.prod-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(380px,1fr)); gap:1.5rem; margin-top:2.5rem; }
+.prod-card { background:var(--bgCard); border:1px solid var(--border); border-radius:14px; overflow:hidden; cursor:pointer; transition:box-shadow .2s, border-color .2s, transform .2s; }
+.prod-card:hover { border-color:var(--border2); box-shadow:var(--shadowHov); transform:translateY(-3px); }
+.prod-hdr { padding:1.75rem 1.75rem 1.25rem; }
+.prod-tag { font-size:.68rem; font-weight:700; color:var(--text3); letter-spacing:.09em; text-transform:uppercase; margin-bottom:.75rem; }
+.prod-name { font-size:1.65rem; font-weight:800; color:var(--text); margin-bottom:.45rem; letter-spacing:-0.03em; }
+.prod-desc { font-size:.87rem; color:var(--text2); line-height:1.65; }
+.prod-feats { list-style:none; padding:1.25rem 1.75rem; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:.5rem; }
+.prod-feats li { font-size:.84rem; color:var(--text2); display:flex; align-items:center; gap:.55rem; }
+.prod-feats li::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--text3); flex-shrink:0; }
+.prod-pills-row { display:flex; gap:.45rem; flex-wrap:wrap; padding:.75rem 1.75rem; border-top:1px solid var(--border); }
+.prod-pill-tag { padding:.2rem .6rem; border:1px solid var(--border); border-radius:4px; font-size:.71rem; font-weight:500; color:var(--text3); }
+.prod-ft { padding:.85rem 1.75rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.prod-ft-lnk { font-size:.82rem; font-weight:500; color:var(--text3); transition:color .15s; }
+.prod-card:hover .prod-ft-lnk { color:var(--text); }
+
+.mock { margin:0 1.75rem 1.75rem; border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+.mock-bar { background:var(--mockBar); padding:.5rem .85rem; display:flex; align-items:center; gap:.45rem; border-bottom:1px solid var(--mockBarBd); }
+.m-dot { width:9px; height:9px; border-radius:50%; }
+.mock-title { font-size:.66rem; color:var(--text3); margin-left:.45rem; font-family:'Menlo',monospace; }
+.mock-body { padding:1rem; background:var(--mockIn); }
+.m-msgs { display:flex; flex-direction:column; gap:.65rem; }
+.m-msg { display:flex; gap:.5rem; align-items:flex-start; }
+.m-msg.r { flex-direction:row-reverse; }
+.m-av { width:22px; height:22px; border-radius:6px; background:var(--text); color:var(--bg); display:flex; align-items:center; justify-content:center; font-size:.58rem; font-weight:800; flex-shrink:0; }
+.m-av.u { background:var(--bg3); color:var(--text2); }
+.m-bbl { max-width:78%; padding:.48rem .78rem; border-radius:8px; font-size:.76rem; line-height:1.52; }
+.m-bbl.ai { background:var(--mockBbl); border:1px solid var(--mockBblBd); color:var(--text); }
+.m-bbl.us { background:var(--text); color:var(--bg); }
+.m-ok { display:flex; align-items:center; gap:.4rem; padding:.32rem .62rem; border-radius:6px; background:var(--greenBg); border:1px solid var(--greenBd); font-size:.69rem; color:var(--green); max-width:80%; }
+.m-ok-dot { width:5px; height:5px; border-radius:50%; background:var(--green); flex-shrink:0; }
+.m-in { background:var(--bgCard); border:1px solid var(--border); border-radius:7px; padding:.42rem .75rem; display:flex; align-items:center; gap:.5rem; margin-top:.5rem; }
+.m-in span { font-size:.69rem; color:var(--text4); flex:1; font-family:'Menlo',monospace; }
+.m-foot { display:flex; gap:1.2rem; margin-top:.55rem; padding-top:.5rem; border-top:1px solid var(--border); }
+.m-foot span { font-size:.67rem; color:var(--text4); display:flex; align-items:center; gap:.3rem; }
+
+.services-sec { background:var(--bg2); }
+.svc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(265px,1fr)); gap:1.1rem; margin-top:2.5rem; }
+.svc-card { padding:1.6rem; border:1px solid var(--border); border-radius:12px; background:var(--bgCard); cursor:pointer; transition:all .18s; }
+.svc-card:hover { border-color:var(--border2); background:var(--bg); box-shadow:var(--shadow); }
+.svc-ico { width:38px; height:38px; border-radius:8px; border:1px solid var(--border); background:var(--bgCard); display:flex; align-items:center; justify-content:center; font-size:1.05rem; margin-bottom:1rem; }
+.svc-card h3 { font-size:.97rem; font-weight:700; color:var(--text); margin-bottom:.45rem; }
+.svc-card p { font-size:.84rem; color:var(--text2); line-height:1.65; }
+.svc-for { display:inline-block; margin-top:.85rem; font-size:.7rem; font-weight:500; color:var(--text3); padding:.2rem .55rem; border:1px solid var(--border); border-radius:4px; }
+.svc-more { display:block; margin-top:.85rem; font-size:.8rem; font-weight:500; color:var(--text3); transition:color .15s; }
+.svc-card:hover .svc-more { color:var(--text); }
+
+.tech-sec { background:var(--bg); }
+.chips { display:flex; flex-wrap:wrap; gap:.55rem; margin-top:2rem; }
+.chip { padding:.42rem .95rem; border:1px solid var(--border); border-radius:50px; font-size:.79rem; font-weight:500; color:var(--text2); transition:all .15s; }
+.chip:hover { border-color:var(--border2); color:var(--text); background:var(--bgCard); }
+
+.why-sec { background:var(--bg2); }
+.why-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(275px,1fr)); gap:1.1rem; margin-top:2.5rem; }
+.why-card { padding:1.6rem; border:1px solid var(--border); border-radius:12px; background:var(--bgCard); transition:border-color .18s; }
+.why-card:hover { border-color:var(--border2); }
+.why-num { font-family:'Sora',sans-serif; font-size:1.75rem; font-weight:900; color:var(--border); margin-bottom:.75rem; }
+.why-card h3 { font-size:.95rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
+.why-card p { font-size:.83rem; color:var(--text2); line-height:1.65; }
+
+.contact-sec { background:var(--bg); }
+.ct-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.ct-info h2 { font-size:clamp(1.8rem,3vw,2.6rem); margin-bottom:.85rem; }
+.ct-info p { color:var(--text2); font-size:.93rem; line-height:1.75; margin-bottom:1.75rem; max-width:320px; }
+.ct-methods { display:flex; flex-direction:column; gap:.75rem; }
+.ct-method { display:flex; align-items:center; gap:.85rem; padding:.95rem 1.1rem; border:1px solid var(--border); border-radius:10px; background:var(--bgCard); text-decoration:none; color:inherit; transition:all .18s; }
+.ct-method:hover { border-color:var(--border2); box-shadow:var(--shadow); }
+.ct-ico { width:36px; height:36px; border-radius:8px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.95rem; flex-shrink:0; }
+.ct-txt h4 { font-size:.84rem; font-weight:600; color:var(--text); margin-bottom:.1rem; }
+.ct-txt p { font-size:.78rem; color:var(--text3); }
+.ct-form { display:flex; flex-direction:column; gap:.9rem; }
+.f-field label { display:block; font-size:.79rem; font-weight:500; color:var(--text2); margin-bottom:.38rem; }
+.f-field input, .f-field textarea { width:100%; padding:.75rem .95rem; border:1px solid var(--border); border-radius:8px; background:var(--inputBg); color:var(--text); font-family:'Inter',sans-serif; font-size:.875rem; transition:border-color .18s; outline:none; }
+.f-field input:focus, .f-field textarea:focus { border-color:var(--border2); }
+.f-field textarea { min-height:120px; resize:vertical; }
+.f-field input::placeholder, .f-field textarea::placeholder { color:var(--text4); }
+.f-submit { padding:.78rem 1.5rem; background:var(--text); color:var(--bg); border:none; border-radius:8px; font-family:'Inter',sans-serif; font-size:.875rem; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:opacity .18s; }
+.f-submit:hover { opacity:.85; }
+
+footer { background:var(--bg); border-top:1px solid var(--border); }
+.ft-top { max-width:1180px; margin:0 auto; padding:3.5rem 1.5rem 2.5rem; display:grid; grid-template-columns:2fr 1fr 1fr; gap:2.5rem; }
+.ft-logo-row { display:flex; align-items:center; gap:.5rem; font-family:'Sora',sans-serif; font-weight:700; font-size:.97rem; color:var(--text); cursor:pointer; margin-bottom:.75rem; }
+.ft-desc { font-size:.81rem; color:var(--text3); line-height:1.65; max-width:235px; margin-bottom:1.1rem; }
+.ft-soc { display:flex; gap:.5rem; }
+.ft-sl { width:32px; height:32px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.78rem; color:var(--text3); text-decoration:none; transition:all .18s; }
+.ft-sl:hover { border-color:var(--border2); color:var(--text); }
+.ft-col h5 { font-size:.69rem; font-weight:700; color:var(--text3); letter-spacing:.09em; text-transform:uppercase; margin-bottom:.95rem; }
+.ft-col ul { list-style:none; display:flex; flex-direction:column; gap:.55rem; }
+.ft-col ul li a, .ft-col ul li span { font-size:.83rem; color:var(--text2); cursor:pointer; transition:color .15s; }
+.ft-col ul li a:hover, .ft-col ul li span:hover { color:var(--text); }
+.ft-btm { border-top:1px solid var(--border); padding:1.2rem 1.5rem; }
+.ft-btm-in { max-width:1180px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.75rem; }
+.ft-btm-in p { font-size:.77rem; color:var(--text3); }
+
+.pg-top { max-width:680px; margin:0 auto 3.5rem; }
+.pg-top .lbl { margin-bottom:.65rem; }
+.pg-top h1 { font-size:clamp(2rem,5vw,3.5rem); margin-bottom:.9rem; }
+.pg-top p { font-size:1rem; color:var(--text2); line-height:1.78; }
+.d-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.1rem; margin-bottom:3rem; }
+.dc { padding:1.6rem; border:1px solid var(--border); border-radius:12px; background:var(--bgCard); transition:border-color .18s; }
+.dc:hover { border-color:var(--border2); }
+.dc-lbl { font-size:.67rem; font-weight:700; color:var(--text4); letter-spacing:.09em; text-transform:uppercase; margin-bottom:.6rem; }
+.dc h3 { font-size:.97rem; font-weight:700; color:var(--text); margin-bottom:.55rem; }
+.dc p { font-size:.84rem; color:var(--text2); line-height:1.68; }
+.dc ul { list-style:none; display:flex; flex-direction:column; gap:.35rem; margin-top:.45rem; }
+.dc ul li { font-size:.83rem; color:var(--text2); display:flex; align-items:flex-start; gap:.45rem; line-height:1.5; }
+.dc ul li::before { content:''; width:3px; height:3px; border-radius:50%; background:var(--text3); flex-shrink:0; margin-top:.55rem; }
+.dc-tags { display:flex; flex-wrap:wrap; gap:.38rem; margin-top:.75rem; }
+.dc-tag { padding:.2rem .55rem; border:1px solid var(--border); border-radius:4px; font-size:.71rem; color:var(--text3); }
+.dc-badge { display:inline-flex; align-items:center; gap:.35rem; margin-top:.75rem; padding:.22rem .65rem; border:1px solid var(--greenBd); border-radius:4px; font-size:.71rem; font-weight:500; color:var(--green); }
+
+.fn-card { border:1px solid var(--border); border-radius:14px; padding:2.25rem; margin-top:1.5rem; background:var(--bgCard); display:grid; grid-template-columns:auto 1fr; gap:2rem; align-items:start; }
+.fn-av { width:72px; height:72px; border-radius:12px; background:var(--text); color:var(--bg); display:flex; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0; }
+.fn-lbl { font-size:.67rem; font-weight:700; color:var(--text4); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.55rem; }
+.fn-name { font-size:1.45rem; font-weight:800; color:var(--text); margin-bottom:.3rem; }
+.fn-role { font-size:.76rem; font-weight:500; color:var(--text3); letter-spacing:.04em; text-transform:uppercase; margin-bottom:.9rem; }
+.fn-bio { font-size:.86rem; color:var(--text2); line-height:1.78; margin-bottom:.55rem; }
+.fn-chips { display:flex; flex-wrap:wrap; gap:.38rem; margin-top:.85rem; }
+.fn-chip { padding:.22rem .6rem; border:1px solid var(--border); border-radius:4px; font-size:.72rem; color:var(--text3); }
+
+.rv { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+.rv.show { opacity:1; transform:translateY(0); }
+
+@media (max-width:1024px) { .ft-top { grid-template-columns:1fr 1fr; } .ft-brand { grid-column:1/-1; } }
+@media (max-width:920px) { .about-grid, .ct-grid, .fn-card { grid-template-columns:1fr; } .about-visual { aspect-ratio:auto; height:280px; } }
+@media (max-width:768px) { .nav-links, .btn-nav-cta { display:none; } .btn-mob { display:block; } section { padding:4rem 1.5rem; } .hero { padding:5.5rem 1.5rem 3rem; } .prod-grid, .d-grid, .why-grid { grid-template-columns:1fr; } .about-stats { grid-template-columns:1fr 1fr; } .ft-top { grid-template-columns:1fr; padding:2.5rem 1.5rem; gap:1.5rem; } .ft-btm-in { flex-direction:column; text-align:center; } .ct-grid { grid-template-columns:1fr; gap:2.5rem; } .inner { padding:5.5rem 1.5rem 3.5rem; } }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="go('home')">
+      <div class="nav-logo-k">MI</div>
+      Mohd Ibrahim Uddin
+    </div>
+    <ul class="nav-links">
+      <li><span onclick="go('home')">Home</span></li>
+      <li><span onclick="go('about')">About</span></li>
+      <li class="nav-drop">
+        <span>Projects ▾</span>
+        <div class="nav-drop-panel">
+          <span onclick="go('nexquery')">AI NexQuery</span>
+          <span onclick="go('hybrid')">Hybrid AI Query System</span>
+          <span onclick="go('aeo')">AEO Diagnostic</span>
+          <span onclick="go('studio')">Ibrahim AI Studio</span>
+        </div>
+      </li>
+      <li><span onclick="go('tech')">Tech Stack</span></li>
+      <li><span onclick="go('contact')">Contact</span></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-theme" id="thBtn"><span id="thIco">🌙</span></button>
+      <button class="btn-nav-cta" onclick="go('contact')">Hire me</button>
+      <button class="btn-mob" id="mobBtn">☰</button>
+    </div>
+  </div>
+</nav>
+
+<div class="mob-nav" id="mobNav">
+  <ul>
+    <li><span onclick="go('home')">Home</span></li>
+    <li><span onclick="go('about')">About</span></li>
+    <li><span onclick="go('nexquery')">AI NexQuery</span></li>
+    <li><span onclick="go('hybrid')">Hybrid AI Query System</span></li>
+    <li><span onclick="go('aeo')">AEO Diagnostic</span></li>
+    <li><span onclick="go('studio')">Ibrahim AI Studio</span></li>
+    <li><span onclick="go('tech')">Tech Stack</span></li>
+    <li><span onclick="go('contact')">Contact</span></li>
+  </ul>
+</div>
+
+<!-- HOME -->
+<div id="page-home" class="page">
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> AI & Machine Learning Engineer</div>
+    <h1>Ships real<br>AI products.</h1>
+    <p class="hero-sub">I'm Mohd Ibrahim Uddin — I build production-grade AI systems, from Text-to-SQL engines to hybrid RAG pipelines. My flagship product, <strong>AI NexQuery</strong>, is live on the Microsoft Store.</p>
+    <div class="hero-btns">
+      <button class="btn btn-solid" onclick="go('nexquery')">View AI NexQuery</button>
+      <a href="https://apps.microsoft.com/detail/9NT74LF51SZ9?hl=en-us&gl=IN&ocid=pdpshare" target="_blank" class="btn btn-ghost" style="text-decoration:none">⊞ Get it on Microsoft Store</a>
+    </div>
+    <div class="hero-pills">
+      <span class="h-pill" onclick="go('nexquery')">AI NexQuery</span>
+      <span class="h-pill" onclick="go('hybrid')">Hybrid AI Query System</span>
+      <span class="h-pill" onclick="go('aeo')">AEO Diagnostic</span>
+      <span class="h-pill" onclick="go('studio')">Ibrahim AI Studio</span>
+    </div>
+    <div class="hero-nums">
+      <div><div class="hn-v">1</div><div class="hn-l">Live on MS Store</div></div>
+      <div><div class="hn-v">4+</div><div class="hn-l">AI projects shipped</div></div>
+      <div><div class="hn-v">2026</div><div class="hn-l">B.E. AI & ML grad</div></div>
+      <div><div class="hn-v">100%</div><div class="hn-l">Built solo</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="about-sec">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text rv">
+        <span class="lbl">About me</span>
+        <h2>AI that ships.<br>Not demos.</h2>
+        <p>I'm a recently graduated AI & ML engineer from Osmania University, building and publishing production AI desktop applications under the name <strong>MOHD AI</strong>.</p>
+        <p>My work sits at the intersection of LLMs, RAG pipelines, and real product delivery — from prototype to Microsoft Store certification.</p>
+        <div class="about-stats">
+          <div class="stat-box"><div class="stat-n">1</div><div class="stat-l">Live MS Store app</div></div>
+          <div class="stat-box"><div class="stat-n">4+</div><div class="stat-l">AI projects</div></div>
+          <div class="stat-box"><div class="stat-n">7.04</div><div class="stat-l">CGPA, B.E. AI &amp; ML</div></div>
+          <div class="stat-box"><div class="stat-n">2</div><div class="stat-l">LLM providers integrated</div></div>
+        </div>
+      </div>
+      <div class="about-visual rv">
+        <div class="vis-dots"></div>
+        <div class="vis-ctr">
+          <div class="vis-box">MI</div>
+          <h3>Mohd Ibrahim Uddin</h3>
+          <p>AI &amp; ML Engineer · MOHD AI</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="products-sec">
+  <div class="wrap">
+    <span class="lbl rv">Flagship product</span>
+    <h2 class="sec-h2 rv">AI NexQuery</h2>
+    <p class="sec-p rv">A hybrid AI query engine shipped as a Windows desktop app — live on the Microsoft Store under publisher MOHD AI.</p>
+    <div class="prod-grid">
+      <div class="prod-card rv" onclick="go('nexquery')">
+        <div class="prod-hdr">
+          <div class="prod-tag">Desktop AI · Live on Microsoft Store</div>
+          <div class="prod-name">AI NexQuery</div>
+          <div class="prod-desc">Query MySQL &amp; MSSQL databases in natural language, ask questions over your documents with RAG, run ML analysis, and visualize your data — all in one app.</div>
+        </div>
+        <div class="mock">
+          <div class="mock-bar">
+            <span class="m-dot" style="background:#ff5f57"></span>
+            <span class="m-dot" style="background:#febc2e"></span>
+            <span class="m-dot" style="background:#28c840"></span>
+            <span class="mock-title">AI NexQuery &nbsp;·&nbsp; Gemini AI &nbsp;·&nbsp; Database Intelligence</span>
+          </div>
+          <div class="mock-body">
+            <div class="m-msgs">
+              <div class="m-msg">
+                <div class="m-av">AI</div>
+                <div class="m-bbl ai">Connected to your MySQL database. Ask me anything in plain English.</div>
+              </div>
+              <div class="m-msg r">
+                <div class="m-av u">U</div>
+                <div class="m-bbl us">What are the top 5 products by revenue this quarter?</div>
+              </div>
+              <div class="m-msg">
+                <div class="m-av">AI</div>
+                <div style="display:flex;flex-direction:column;gap:.38rem;max-width:80%">
+                  <div class="m-bbl ai">Generating SQL and running query...</div>
+                  <div class="m-ok"><span class="m-ok-dot"></span>Query executed · 5 rows returned · 0.4s</div>
+                </div>
+              </div>
+            </div>
+            <div class="m-in"><span>Ask a question about your data...</span><span>💬</span></div>
+            <div class="m-foot">
+              <span><span style="width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block"></span>Gemini AI</span>
+              <span>🔒 Encrypted</span>
+              <span>📄 RAG + FAISS</span>
+            </div>
+          </div>
+        </div>
+        <ul class="prod-feats">
+          <li>Text-to-SQL for MySQL &amp; MSSQL databases</li>
+          <li>Document QA via LangChain + FAISS vector search</li>
+          <li>ML Studio — KMeans, PCA, anomaly detection</li>
+          <li>Gemini → Groq fallback for reliability</li>
+        </ul>
+        <div class="prod-pills-row">
+          <span class="prod-pill-tag">Live on MS Store</span>
+          <span class="prod-pill-tag">Gemini + Groq</span>
+          <span class="prod-pill-tag">RAG + Text-to-SQL</span>
+        </div>
+        <div class="prod-ft"><span class="prod-ft-lnk">View full details →</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="services-sec">
+  <div class="wrap">
+    <span class="lbl rv">More projects</span>
+    <h2 class="sec-h2 rv">Other things I've built</h2>
+    <p class="sec-p rv">Alongside AI NexQuery, here's the rest of my shipped work.</p>
+    <div class="svc-grid">
+      <div class="svc-card rv" onclick="go('hybrid')">
+        <div class="svc-ico">🔗</div>
+        <h3>Hybrid AI Query System</h3>
+        <p>The engine behind AI NexQuery — combines structured SQL querying with semantic vector search in one unified pipeline.</p>
+        <div class="svc-for">RAG · Text-to-SQL</div>
+        <span class="svc-more">Learn more →</span>
+      </div>
+      <div class="svc-card rv" onclick="go('aeo')">
+        <div class="svc-ico">📈</div>
+        <h3>AEO Diagnostic</h3>
+        <p>Answer Engine Optimization tool — see which brands dominate Google SERP, Gemini AI, and AI Overview for any search query.</p>
+        <div class="svc-for">Search Intelligence</div>
+        <span class="svc-more">Learn more →</span>
+      </div>
+      <div class="svc-card rv" onclick="go('studio')">
+        <div class="svc-ico">🧪</div>
+        <h3>Ibrahim AI Studio</h3>
+        <p>An earlier AI engineer portfolio showcasing Text-to-SQL, RAG pipelines, OCR AI, and data analytics dashboards.</p>
+        <div class="svc-for">Portfolio Project</div>
+        <span class="svc-more">Learn more →</span>
+      </div>
+      <div class="svc-card rv" onclick="go('tech')">
+        <div class="svc-ico">🛠️</div>
+        <h3>Full stack</h3>
+        <p>Python, FastAPI, LangChain, FAISS, Supabase, MySQL/MSSQL, and MSIX packaging for real Windows deployment.</p>
+        <div class="svc-for">Tech Stack</div>
+        <span class="svc-more">See stack →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="why-sec">
+  <div class="wrap">
+    <span class="lbl rv">Why work with me</span>
+    <h2 class="sec-h2 rv">Built for real deployment</h2>
+    <div class="why-grid">
+      <div class="why-card rv"><div class="why-num">01</div><h3>Ships working products</h3><p>AI NexQuery is a live, certified Microsoft Store app — not a prototype.</p></div>
+      <div class="why-card rv"><div class="why-num">02</div><h3>Solved real packaging pain</h3><p>PyInstaller bundling, MSIX signing, and Store policy certification — handled end to end.</p></div>
+      <div class="why-card rv"><div class="why-num">03</div><h3>Multi-provider reliability</h3><p>Gemini → Groq fallback architecture so the app keeps working when one provider fails.</p></div>
+      <div class="why-card rv"><div class="why-num">04</div><h3>Lean by default</h3><p>I trim features that don't earn their place — simple, focused products.</p></div>
+      <div class="why-card rv"><div class="why-num">05</div><h3>Full-stack AI</h3><p>RAG, Text-to-SQL, ML pipelines, and secure key management — one engineer, full ownership.</p></div>
+      <div class="why-card rv"><div class="why-num">06</div><h3>Open to opportunities</h3><p>Actively looking for freelance, part-time, and full-time AI engineering roles.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="contact-sec">
+  <div class="wrap">
+    <div class="ct-grid">
+      <div class="rv">
+        <span class="lbl">Contact</span>
+        <h2 class="ct-info">Let's build<br>something.</h2>
+        <p>Open to freelance, part-time, and full-time AI engineering roles. Want to know more about AI NexQuery? Reach out.</p>
+        <div class="ct-methods">
+          <a href="mailto:mohdibrahimuddin41@gmail.com" class="ct-method">
+            <div class="ct-ico">✉️</div><div class="ct-txt"><h4>Email</h4><p>mohdibrahimuddin41@gmail.com</p></div>
+          </a>
+          <a href="https://www.linkedin.com/in/mohd-ibrahim-uddin-" target="_blank" class="ct-method">
+            <div class="ct-ico">💼</div><div class="ct-txt"><h4>LinkedIn</h4><p>mohd-ibrahim-uddin-</p></div>
+          </a>
+          <a href="https://github.com/Ibrahim8047" target="_blank" class="ct-method">
+            <div class="ct-ico">🐙</div><div class="ct-txt"><h4>GitHub</h4><p>Ibrahim8047</p></div>
+          </a>
+        </div>
+      </div>
+      <div class="rv">
+        <form class="ct-form" id="cf1">
+          <div class="f-field"><label>Name</label><input type="text" name="name" required placeholder="Your name"></div>
+          <div class="f-field"><label>Email</label><input type="email" name="email" required placeholder="you@company.com"></div>
+          <div class="f-field"><label>Message</label><textarea name="message" required placeholder="Tell me about your project or opportunity..."></textarea></div>
+          <button type="submit" class="f-submit">Send message <span>→</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-logo-row" onclick="go('home')">
+        <div class="nav-logo-k">MI</div>
+        Mohd Ibrahim Uddin
+      </div>
+      <p class="ft-desc">AI & ML Engineer — AI NexQuery, Hybrid AI Query System, AEO Diagnostic, RAG, Text-to-SQL.</p>
+      <div class="ft-soc">
+        <a href="https://github.com/Ibrahim8047" target="_blank" class="ft-sl">gh</a>
+        <a href="https://www.linkedin.com/in/mohd-ibrahim-uddin-" target="_blank" class="ft-sl">in</a>
+        <a href="mailto:mohdibrahimuddin41@gmail.com" class="ft-sl">@</a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <h5>Explore</h5>
+      <ul>
+        <li><span onclick="go('about')">About</span></li>
+        <li><span onclick="go('tech')">Tech stack</span></li>
+        <li><span onclick="go('contact')">Contact</span></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h5>Projects</h5>
+      <ul>
+        <li><span onclick="go('nexquery')">AI NexQuery</span></li>
+        <li><span onclick="go('hybrid')">Hybrid AI Query System</span></li>
+        <li><span onclick="go('aeo')">AEO Diagnostic</span></li>
+        <li><span onclick="go('studio')">Ibrahim AI Studio</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-btm">
+    <div class="ft-btm-in">
+      <p>© 2026 Mohd Ibrahim Uddin. All rights reserved.</p>
+      <p>Built with 💜 &amp; Python</p>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /page-home -->
+
+<!-- NEXQUERY DETAIL -->
+<div id="page-nexquery" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top">
+    <span class="lbl">Desktop AI · Live on Microsoft Store</span>
+    <h1>AI NexQuery</h1>
+    <p>A hybrid AI query engine built for developers, data analysts, and business users. Published as a Windows desktop app under publisher <strong>MOHD AI</strong>.</p>
+  </div>
+  <div class="d-grid">
+    <div class="dc"><div class="dc-lbl">Overview</div><h3>What it does</h3><p>Query MySQL &amp; MSSQL databases in natural language, ask questions over your PDFs/DOCX/TXT via RAG, run ML analysis, and explore interactive visualizations — all in one app.</p><div class="dc-badge">Live on Microsoft Store</div></div>
+    <div class="dc"><div class="dc-lbl">Features</div><h3>Core capabilities</h3><ul><li>Database Intelligence — natural language MySQL/MSSQL querying</li><li>Document QA — LangChain + FAISS vector search over PDF/DOCX/TXT</li><li>ML Studio — KMeans clustering, PCA, anomaly detection</li><li>Data Visualization — interactive charts and dashboards</li></ul></div>
+    <div class="dc"><div class="dc-lbl">Architecture</div><h3>How it's built</h3><p>A centralized AI Provider Manager routes requests through Gemini first, falling back to Groq (llama-3.3-70b-versatile) for reliability. Both API keys are served securely from a Supabase Edge Function rather than stored in the app.</p></div>
+    <div class="dc"><div class="dc-lbl">Getting there</div><h3>Shipping challenges solved</h3><ul><li>PyInstaller bundling — torch DLLs, tkinter data paths, sklearn .libs, missing DLLs</li><li>MSIX packaging errors — invalid filenames, signing/publisher CN mismatches</li><li>Microsoft Store policy certification — billing flow, AI content disclosure, free-tier limits</li></ul></div>
+    <div class="dc"><div class="dc-lbl">Security</div><h3>Privacy &amp; safety</h3><p>End-to-end encrypted database connections. API keys are never stored locally — fetched securely per-session from a Supabase Edge Function.</p><div class="dc-badge">End-to-end encrypted</div></div>
+    <div class="dc"><div class="dc-lbl">Technology</div><h3>Built with</h3><div class="dc-tags"><span class="dc-tag">Python</span><span class="dc-tag">Gemini AI</span><span class="dc-tag">Groq</span><span class="dc-tag">LangChain</span><span class="dc-tag">FAISS</span><span class="dc-tag">Supabase</span><span class="dc-tag">MySQL/MSSQL</span><span class="dc-tag">MSIX</span></div></div>
+  </div>
+  <div style="text-align:center"><a href="https://apps.microsoft.com/detail/9NT74LF51SZ9?hl=en-us&gl=IN&ocid=pdpshare" target="_blank" class="btn btn-solid">🪟 Get it on Microsoft Store →</a></div>
+</div></div>
+
+<!-- HYBRID DETAIL -->
+<div id="page-hybrid" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top">
+    <span class="lbl">AI · RAG · Semantic + Structured Search</span>
+    <h1>Hybrid AI Query System</h1>
+    <p>An advanced retrieval system combining semantic vector search with structured SQL querying — the core engine that powers AI NexQuery.</p>
+  </div>
+  <div class="d-grid">
+    <div class="dc"><div class="dc-lbl">Overview</div><h3>What it does</h3><p>Enables natural language access to both unstructured documents and relational databases in a single unified pipeline, routing each query to the right retrieval strategy.</p></div>
+    <div class="dc"><div class="dc-lbl">Features</div><h3>Key capabilities</h3><ul><li>Hybrid RAG + SQL routing</li><li>Semantic embedding search over documents</li><li>Context-aware answer generation</li><li>Multi-source data fusion</li></ul></div>
+    <div class="dc"><div class="dc-lbl">Technology</div><h3>Built with</h3><div class="dc-tags"><span class="dc-tag">Python</span><span class="dc-tag">LangChain</span><span class="dc-tag">FAISS</span><span class="dc-tag">RAG</span></div></div>
+  </div>
+  <div style="text-align:center"><a href="https://github.com/Ibrahim8047/Hybrid-AI-Query-System" target="_blank" class="btn btn-solid">🐙 View on GitHub →</a></div>
+</div></div>
+
+<!-- AEO DETAIL -->
+<div id="page-aeo" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top">
+    <span class="lbl">AI · Search Intelligence · Diagnostics</span>
+    <h1>AEO Diagnostic</h1>
+    <p>An Answer Engine Optimization diagnostic tool — reveals which brands dominate Google SERP, Gemini AI, and AI Overview results for any given search query.</p>
+  </div>
+  <div class="d-grid">
+    <div class="dc"><div class="dc-lbl">Overview</div><h3>What it does</h3><p>Helps teams understand their visibility in the AI-search era by analyzing brand dominance across traditional search results and AI-generated overviews.</p></div>
+    <div class="dc"><div class="dc-lbl">Features</div><h3>Key capabilities</h3><ul><li>SERP brand-dominance analysis</li><li>Gemini AI Overview visibility tracking</li><li>Query-level diagnostics</li></ul></div>
+    <div class="dc"><div class="dc-lbl">Technology</div><h3>Built with</h3><div class="dc-tags"><span class="dc-tag">Python</span><span class="dc-tag">Gemini AI</span><span class="dc-tag">SERP APIs</span></div></div>
+  </div>
+  <div style="text-align:center"><a href="https://github.com/Ibrahim8047/AEO-diagnostic" target="_blank" class="btn btn-solid">🐙 View on GitHub →</a></div>
+</div></div>
+
+<!-- STUDIO DETAIL -->
+<div id="page-studio" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top">
+    <span class="lbl">Portfolio · AI Engineer Showcase</span>
+    <h1>Ibrahim AI Studio</h1>
+    <p>An earlier AI engineer portfolio project showcasing real-world intelligent systems — a precursor demonstrating end-to-end AI product thinking.</p>
+  </div>
+  <div class="d-grid">
+    <div class="dc"><div class="dc-lbl">Overview</div><h3>What it includes</h3><p>Showcases Text-to-SQL, RAG pipelines, OCR AI, and data analytics dashboards in a single demonstration project.</p></div>
+    <div class="dc"><div class="dc-lbl">Technology</div><h3>Built with</h3><div class="dc-tags"><span class="dc-tag">HTML</span><span class="dc-tag">Python</span><span class="dc-tag">Text-to-SQL</span><span class="dc-tag">OCR AI</span></div></div>
+  </div>
+  <div style="text-align:center"><a href="https://github.com/Ibrahim8047/Ibrahim-AI-Studio" target="_blank" class="btn btn-solid">🐙 View on GitHub →</a></div>
+</div></div>
+
+<!-- TECH STACK -->
+<div id="page-tech" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top"><span class="lbl">Technology</span><h1>Tech stack</h1><p>Tools and platforms I use to build and ship production AI systems.</p></div>
+  <div class="d-grid">
+    <div class="dc"><div class="dc-lbl">AI Models &amp; LLMs</div><h3>Language models</h3><div class="dc-tags"><span class="dc-tag">Gemini AI</span><span class="dc-tag">Groq (Llama 3.3)</span><span class="dc-tag">LangChain</span></div></div>
+    <div class="dc"><div class="dc-lbl">RAG &amp; Retrieval</div><h3>Pipelines</h3><div class="dc-tags"><span class="dc-tag">FAISS</span><span class="dc-tag">RAG Pipelines</span><span class="dc-tag">Text-to-SQL</span></div></div>
+    <div class="dc"><div class="dc-lbl">Backend</div><h3>Languages &amp; frameworks</h3><div class="dc-tags"><span class="dc-tag">Python</span><span class="dc-tag">FastAPI</span><span class="dc-tag">CustomTkinter</span><span class="dc-tag">Flet</span></div></div>
+    <div class="dc"><div class="dc-lbl">Machine Learning</div><h3>ML &amp; data science</h3><div class="dc-tags"><span class="dc-tag">Scikit-learn</span><span class="dc-tag">Pandas</span><span class="dc-tag">NumPy</span></div></div>
+    <div class="dc"><div class="dc-lbl">Infrastructure</div><h3>Databases &amp; deployment</h3><div class="dc-tags"><span class="dc-tag">Supabase</span><span class="dc-tag">MySQL</span><span class="dc-tag">MSSQL</span><span class="dc-tag">MSIX</span><span class="dc-tag">PyInstaller</span></div></div>
+    <div class="dc"><div class="dc-lbl">Document Intelligence</div><h3>OCR &amp; docs</h3><div class="dc-tags"><span class="dc-tag">Azure Form Recognizer</span><span class="dc-tag">FAISS</span><span class="dc-tag">LangChain</span></div></div>
+  </div>
+</div></div>
+
+<!-- ABOUT -->
+<div id="page-about" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top"><span class="lbl">About</span><h1>About me</h1><p>AI &amp; ML engineer focused on building intelligent systems that actually ship — not just demos.</p></div>
+  <div class="d-grid">
+    <div class="dc"><div class="dc-lbl">Background</div><h3>Education</h3><p>B.E. in AI &amp; ML from Osmania University (2026), CGPA 7.04. Studied Secure Software Engineering and foundational-to-advanced AI/ML coursework covering LLMs and Generative AI.</p></div>
+    <div class="dc"><div class="dc-lbl">Approach</div><h3>How I work</h3><p>I build products end to end — architecture, model integration, packaging, and shipping. I trim features that don't earn their place and keep things lean.</p></div>
+    <div class="dc"><div class="dc-lbl">Looking for</div><h3>Open to</h3><p>Freelance, part-time, and full-time AI engineering opportunities — anywhere I can keep building and shipping real AI products.</p></div>
+    <div class="dc"><div class="dc-lbl">Details</div><h3>Contact</h3><p><strong>Email:</strong> <a href="mailto:mohdibrahimuddin41@gmail.com" style="color:var(--text);text-decoration:underline">mohdibrahimuddin41@gmail.com</a><br><br><strong>GitHub:</strong> <a href="https://github.com/Ibrahim8047" target="_blank" style="color:var(--text);text-decoration:underline">Ibrahim8047</a><br><br><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mohd-ibrahim-uddin-" target="_blank" style="color:var(--text);text-decoration:underline">mohd-ibrahim-uddin-</a></p></div>
+  </div>
+  <div class="fn-card">
+    <div class="fn-av">👨‍💻</div>
+    <div>
+      <div class="fn-lbl">Founder / Builder</div>
+      <div class="fn-name">Mohd Ibrahim Uddin</div>
+      <div class="fn-role">AI &amp; ML Engineer · MOHD AI</div>
+      <p class="fn-bio">Builds and ships production AI desktop applications under the publisher name MOHD AI. Flagship product AI NexQuery is live on the Microsoft Store, integrating Gemini and Groq LLMs, RAG pipelines, Text-to-SQL, LangChain, FAISS, and Supabase.</p>
+      <p class="fn-bio">Prior internship experience at CodeClause Pvt Ltd. Actively seeking freelance and full-time AI engineering opportunities.</p>
+      <div class="fn-chips">
+        <span class="fn-chip">AI / ML Engineering</span>
+        <span class="fn-chip">RAG &amp; LLMs</span>
+        <span class="fn-chip">Text-to-SQL</span>
+        <span class="fn-chip">Python</span>
+        <span class="fn-chip">Windows App Packaging</span>
+        <span class="fn-chip">Product Builder</span>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="inner"><div class="wrap">
+  <button class="btn-back" onclick="go('home')">← Back</button>
+  <div class="pg-top"><span class="lbl">Contact</span><h1>Let's build together</h1><p>Open to freelance, part-time, and full-time AI engineering opportunities. Reach out directly.</p></div>
+  <div class="ct-grid">
+    <div>
+      <span class="lbl">Get in touch</span>
+      <h2 class="ct-info" style="font-size:2rem;font-weight:800;margin-bottom:.85rem">Mohd Ibrahim Uddin</h2>
+      <p style="color:var(--text2);font-size:.9rem;line-height:1.75;margin-bottom:1.65rem;max-width:320px">AI &amp; ML Engineer — available for freelance, part-time, and full-time roles.</p>
+      <div class="ct-methods">
+        <a href="mailto:mohdibrahimuddin41@gmail.com" class="ct-method"><div class="ct-ico">✉️</div><div class="ct-txt"><h4>Email</h4><p>mohdibrahimuddin41@gmail.com</p></div></a>
+        <a href="https://www.linkedin.com/in/mohd-ibrahim-uddin-" target="_blank" class="ct-method"><div class="ct-ico">💼</div><div class="ct-txt"><h4>LinkedIn</h4><p>mohd-ibrahim-uddin-</p></div></a>
+        <a href="https://github.com/Ibrahim8047" target="_blank" class="ct-method"><div class="ct-ico">🐙</div><div class="ct-txt"><h4>GitHub</h4><p>Ibrahim8047</p></div></a>
+      </div>
+    </div>
+    <form class="ct-form" id="cf2">
+      <div class="f-field"><label>Name</label><input type="text" name="name" required placeholder="Your name"></div>
+      <div class="f-field"><label>Email</label><input type="email" name="email" required placeholder="you@company.com"></div>
+      <div class="f-field"><label>Message</label><textarea name="message" required placeholder="Tell me about your project or opportunity..."></textarea></div>
+      <button type="submit" class="f-submit">Send message <span>→</span></button>
+    </form>
+  </div>
+</div></div>
+
+<script>
+const PAGES = {
+  'home': 'page-home',
+  'nexquery': 'page-nexquery',
+  'hybrid': 'page-hybrid',
+  'aeo': 'page-aeo',
+  'studio': 'page-studio',
+  'tech': 'page-tech',
+  'about': 'page-about',
+  'contact': 'page-contact',
+};
+const TITLES = {
+  'home': 'Mohd Ibrahim Uddin — AI & ML Engineer',
+  'nexquery': 'AI NexQuery — Mohd Ibrahim Uddin',
+  'hybrid': 'Hybrid AI Query System — Mohd Ibrahim Uddin',
+  'aeo': 'AEO Diagnostic — Mohd Ibrahim Uddin',
+  'studio': 'Ibrahim AI Studio — Mohd Ibrahim Uddin',
+  'tech': 'Tech Stack — Mohd Ibrahim Uddin',
+  'about': 'About — Mohd Ibrahim Uddin',
+  'contact': 'Contact — Mohd Ibrahim Uddin',
+};
+
+function go(route) {
+  document.getElementById('mobNav').classList.remove('open');
+  document.getElementById('mobBtn').textContent = '☰';
+  if (!PAGES[route]) route = 'home';
+  document.querySelectorAll('.page, .inner').forEach(el => { el.style.display = 'none'; el.classList.remove('active'); });
+  const target = document.getElementById(PAGES[route]);
+  if (!target) return;
+  if (route === 'home') {
+    target.style.display = 'block';
+  } else {
+    target.style.display = 'block';
+    target.classList.add('active');
+    setTimeout(() => { target.querySelectorAll('.rv').forEach(el => el.classList.add('show')); }, 80);
+  }
+  document.title = TITLES[route] || 'Mohd Ibrahim Uddin';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.page, .inner').forEach(el => el.style.display = 'none');
+  const home = document.getElementById('page-home');
+  if (home) home.style.display = 'block';
+  const saved = localStorage.getItem('miu-theme') || 'light';
+  applyTheme(saved);
+});
+
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('miu-theme', t);
+  const ico = document.getElementById('thIco');
+  if (ico) ico.textContent = (t === 'dark') ? '☀️' : '🌙';
+}
+document.getElementById('thBtn').addEventListener('click', function() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+document.getElementById('mobBtn').addEventListener('click', function() {
+  const mn = document.getElementById('mobNav');
+  mn.classList.toggle('open');
+  this.textContent = mn.classList.contains('open') ? '✕' : '☰';
+});
+
+window.addEventListener('scroll', function() {
+  const nav = document.getElementById('nav');
+  if (window.scrollY > 50) { nav.style.height = '50px'; nav.style.boxShadow = '0 1px 8px rgba(0,0,0,0.08)'; }
+  else { nav.style.height = '58px'; nav.style.boxShadow = 'none'; }
+});
+
+const revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('show'); revealObs.unobserve(e.target); } });
+}, { threshold: 0.07, rootMargin: '0px 0px -25px 0px' });
+document.querySelectorAll('#page-home .rv').forEach(el => revealObs.observe(el));
+
+function setupForm(id) {
+  const form = document.getElementById(id);
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const n = fd.get('name') || '', em = fd.get('email') || '', m = fd.get('message') || '';
+    const subj = encodeURIComponent('Inquiry from ' + n);
+    const body = encodeURIComponent('Name: ' + n + '\r\nEmail: ' + em + '\r\n\r\n' + m);
+    window.location.href = 'mailto:mohdibrahimuddin41@gmail.com?subject=' + subj + '&body=' + body;
+    const btn = form.querySelector('.f-submit');
+    if (btn) {
+      const orig = btn.innerHTML;
+      btn.textContent = 'Opening email client...';
+      setTimeout(function() { btn.innerHTML = orig; form.reset(); }, 3000);
+    }
+  });
+}
+setupForm('cf1');
+setupForm('cf2');
+</script>
+</body>
+</html>
